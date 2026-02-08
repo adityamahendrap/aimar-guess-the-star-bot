@@ -3,6 +3,10 @@ class Authenticator {
     this.page = page;
   }
 
+  async delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   async openModal() {
     await this.page.waitForSelector("#openProfile");
     await this.page.click("#openProfile");

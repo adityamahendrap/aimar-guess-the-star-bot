@@ -6,8 +6,9 @@ const GamePlayer = require("./gamePlayer");
 
 const URL = "https://guess-the-star.aimar.id/";
 
-const username = process.env.USERNAME;
-const password = process.env.PASSWORD;
+const username = process.env.USERNAME_Q;
+const password = process.env.PASSWORD_Q;
+
 
 (async () => {
   const browser = await puppeteer.launch({
@@ -28,6 +29,9 @@ const password = process.env.PASSWORD;
   });
 
   const auth = new Authenticator(page);
+  
+  console.log("Username:", username);
+  console.log("Password:", password);
 
   try {
     console.log("Opening login modal...");
@@ -40,6 +44,7 @@ const password = process.env.PASSWORD;
 
     // Ganti dengan username dan password yang sesuai
     await auth.login(username, password);
+    await auth.delay(3000);
 
     // Tunggu navigasi atau feedback setelah login
     const isLogin = await auth.checkLogin();
