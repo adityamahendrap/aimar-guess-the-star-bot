@@ -1,0 +1,4 @@
+node_modules
+.env
+logs/game-result.json
+logs/network-logs.json
