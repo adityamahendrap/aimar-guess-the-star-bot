@@ -11,7 +11,7 @@ const password = process.env.PASSWORD;
 
 (async () => {
   const browser = await puppeteer.launch({
-    headless: true, // true kalau mau tanpa UI
+    headless: true,
     defaultViewport: null,
     args: ["--start-maximized"],
   });
@@ -50,7 +50,7 @@ const password = process.env.PASSWORD;
 
     // Start playing the game
     const gamePlayer = new GamePlayer(page);
-    await gamePlayer.showStats();
+    await gamePlayer.showAnswerKeyStats();
 
     console.log("\n🎮 Starting game...");
     await gamePlayer.playGame(); // Play 10 rounds
