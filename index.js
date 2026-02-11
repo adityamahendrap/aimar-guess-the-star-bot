@@ -42,23 +42,20 @@ const password = process.env.PASSWORD_Q;
       throw new Error("Username or password is missing");
     }
 
-    // Ganti dengan username dan password yang sesuai
     await auth.login(username, password);
     await auth.delay(3000);
 
-    // Tunggu navigasi atau feedback setelah login
     const isLogin = await auth.checkLogin();
     if (!isLogin) {
       throw new Error("Login failed");
     }
     console.log("Login successful!");
 
-    // Start playing the game
     const gamePlayer = new GamePlayer(page);
     await gamePlayer.showAnswerKeyStats();
 
     console.log("\n🎮 Starting game...");
-    await gamePlayer.playGame(); // Play 10 rounds
+    await gamePlayer.playGame();
     
   } catch (error) {
     console.error(error);

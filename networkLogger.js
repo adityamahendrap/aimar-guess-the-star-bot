@@ -79,7 +79,6 @@ function attachResponseLogger(page, { filter }) {
     // });
     // writeLogs(logs);
 
-    // simpan kunci jawaban
     if (
       response.url().includes("/api/v1/game/round") &&
       body?.image_id

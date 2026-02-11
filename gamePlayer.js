@@ -20,7 +20,6 @@
 
     async getCurrentImageId() {
       const imgSrc = await this.page.$eval("#gameImage", (img) => img.src);
-      // Extract image ID from URL like /api/v1/images/595c3fd6-71bb-42d1-831c-0f776727aa29
       const match = imgSrc.match(/\/images\/([a-f0-9-]+)/);
       return match ? match[1] : null;
     }
@@ -36,7 +35,7 @@
         const correct = Number(getText("#statCorrect"));
         const guesses = Number(getText("#statGuesses"));
 
-        const progressLabel = getText("#statProgressLabel"); // "0 / 10"
+        const progressLabel = getText("#statProgressLabel");
         let current = null;
         let total = null;
 
@@ -91,7 +90,6 @@
     }
 
     async playRound() {
-      // tunggu sampai benar-benar siap
       const ready = await this.waitForQuestion();
       if (!ready) {
         console.log("⏳ Question not ready yet, waiting...");
@@ -135,7 +133,6 @@
           timeout: 1500
         });
 
-        // ambil result text
         const result = await this.page.evaluate(() => {
           const statusEl = document.querySelector("#resultStatus");
           const detailEl = document.querySelector("#resultDetail");
@@ -143,7 +140,6 @@
           const status = statusEl ? statusEl.textContent.trim() : null;
           const detail = detailEl ? detailEl.textContent.trim() : null;
 
-          // extract score: contoh "4/10"
           let score = null;
           let correct = null;
           let total = null;
@@ -161,25 +157,22 @@
             timestamp: new Date().toISOString(),
             status,
             detail,
-            score,     // "4/10"
-            correct,   // 4
-            total,     // 10
+            score,    
+            correct,  
+            total,    
           };
         });
 
-        // simpan ke file
         saveGameResult(result);
 
         console.log(
           `\n📊 Result saved: ${JSON.stringify(result)}`
         );
 
-        // ▶ lanjutkan game
         await this.page.click("#resultContinue");
         await this.delay(1500);
 
       } catch {
-        // result tidak muncul → normal
       }
     }
 
@@ -192,8 +185,6 @@
           round++;
         } catch (error) {
           console.error(`❌ Error in round ${round}:`, error);
-
-          // recovery delay biar tidak spam error
           await this.delay(3000);
         }
       }
